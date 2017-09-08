@@ -1,5 +1,4 @@
 # Junit Sample project #
-===================
 
 # Pre-requisit to run this project: #
 1. Java 7 or higher
@@ -25,4 +24,3 @@ This will show you summary of all test cases in details
 
 # How to skip test cases #
 run command mvn install -DskipTests
-======*======================*=======================*=========================
