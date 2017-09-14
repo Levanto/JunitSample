@@ -61,7 +61,7 @@ public class RegistrationDaoImplTest {
 	}
 
 	@Test(expected = NonUniqueObjectException.class)
-	public void testSaveUserFailureWhenUserAlreadyExist() {
+	public void testSaveUserFailureWhenUserAlreadyExist() throws Exception {
 		// GIVEN
 		User user = createUser(USER_ID, PASSWORD);
 		registrationDaoImpl.saveUser(user);

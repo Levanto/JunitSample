@@ -26,9 +26,6 @@ public class User implements Serializable {
 	@Column(name = "PASSWORD")
 	private String password;
 
-	public User() {
-	}
-
 	public String getUserId() {
 		return userId;
 	}

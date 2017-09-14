@@ -1,20 +1,16 @@
-/**
- * 
- */
 package junit.controller;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.test.annotation.Rollback;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.transaction.annotation.Transactional;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import junit.entity.User;
 import junit.service.RegistrationService;
@@ -23,15 +19,13 @@ import junit.util.Constants;
 /**
  * @author GovindSingh
  * @category Test
- * @since 2017 This is test class for RegistrationController which is used to test all public method with Junit
+ * @since 2017 This is test class for RegistrationController which is used to test all public method with Junit and
+ *        mockito
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath:application-test-context.xml" })
-@Transactional
-@Rollback(true)
-public class RegistrationControllerTest {
-	@Autowired
-	@Qualifier("registrationService")
+@RunWith(MockitoJUnitRunner.class)
+public class RegistrationControllerMockTest {
+
+	@Mock
 	private RegistrationService registrationService;
 
 	private User user;
@@ -40,18 +34,21 @@ public class RegistrationControllerTest {
 	@Before
 	public void setup() {
 		registrationController.setRegistrationService(registrationService);
+
 	}
 
 	@Test
 	public void testRegisterUserSuccess() throws Exception {
 		// GIVEN
 		User user = createUser("12345678", "ABCDEFGH");
+		when(registrationService.registerUser(user)).thenReturn(Constants.SUCCESS);
 
 		// WHEN
 		String result = registrationController.registerUser(user);
 
 		// THEN
 		assertThat("The user registration should not fail", result, is(Constants.SUCCESS));
+		verify(registrationService, times(1)).registerUser(user);
 	}
 
 	@Test
@@ -64,6 +61,7 @@ public class RegistrationControllerTest {
 
 		// THEN
 		assertThat("The user registration should not pass", result, is(Constants.USER_ID_INVALID));
+		verify(registrationService, times(0)).registerUser(user);
 	}
 
 	@Test
@@ -76,6 +74,7 @@ public class RegistrationControllerTest {
 
 		// THEN
 		assertThat("The user registration should not pass", result, is(Constants.USER_ID_INVALID));
+		verify(registrationService, times(0)).registerUser(user);
 	}
 
 	@Test
@@ -88,6 +87,7 @@ public class RegistrationControllerTest {
 
 		// THEN
 		assertThat("The user registration should not pass", result, is(Constants.USER_ID_LENGTH_INVALID));
+		verify(registrationService, times(0)).registerUser(user);
 	}
 
 	@Test
@@ -100,6 +100,7 @@ public class RegistrationControllerTest {
 
 		// THEN
 		assertThat("The user registration should not pass", result, is(Constants.USER_ID_LENGTH_INVALID));
+		verify(registrationService, times(0)).registerUser(user);
 	}
 
 	@Test
@@ -112,6 +113,7 @@ public class RegistrationControllerTest {
 
 		// THEN
 		assertThat("The user registration should not pass", result, is(Constants.PASS_WORD_INVALID));
+		verify(registrationService, times(0)).registerUser(user);
 	}
 
 	@Test
@@ -124,6 +126,7 @@ public class RegistrationControllerTest {
 
 		// THEN
 		assertThat("The user registration should not pass", result, is(Constants.PASS_WORD_INVALID));
+		verify(registrationService, times(0)).registerUser(user);
 	}
 
 	@Test
@@ -136,6 +139,7 @@ public class RegistrationControllerTest {
 
 		// THEN
 		assertThat("The user registration should not pass", result, is(Constants.PASS_WORD_LENGTH_INVALID));
+		verify(registrationService, times(0)).registerUser(user);
 	}
 
 	@Test
@@ -148,21 +152,22 @@ public class RegistrationControllerTest {
 
 		// THEN
 		assertThat("The user registration should not pass", result, is(Constants.PASS_WORD_LENGTH_INVALID));
+		verify(registrationService, times(0)).registerUser(user);
 	}
 
 	@Test
 	public void testRegisterUserFailureWhenUserIdAlreadyExist() throws Exception {
 		// GIVEN
 		User user = createUser("12345678", "ABCDEFGH");
-		registrationController.registerUser(user);
+		when(registrationService.registerUser(user)).thenReturn(Constants.USER_ID_ALREADY_EXIST);
 
 		// WHEN
 		String result = registrationController.registerUser(user);
 
 		// THEN
 		assertThat("The user registration should not pass", result, is(Constants.USER_ID_ALREADY_EXIST));
+		verify(registrationService, times(1)).registerUser(user);
 	}
-
 	private User createUser(String userId, String password) {
 		user = new User();
 		user.setUserId(userId);

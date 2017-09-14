@@ -25,14 +25,16 @@ public class UserValidator {
 		}
 
 		if (password == null || password.isEmpty()) {
-			return Constants.PASSWORD_INVALID;
+			return Constants.PASS_WORD_INVALID;
 		}
 		if (password.length() < 5 || password.length() > 20) {
-			return Constants.PASSWORD_LENGTH_INVALID;
+			return Constants.PASS_WORD_LENGTH_INVALID;
 		}
 
 		return Constants.SUCCESS;
 
 	}
 
+	private UserValidator() {
+	}
 }

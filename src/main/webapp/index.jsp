@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-    <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>    
-   <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>    
+	pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <!-- This page need some more changes -->
@@ -10,11 +10,11 @@
 <title>Register User</title>
 </head>
 <body>
-<form:form action="/register.htm" commandName ="User">
-<form:input type ="text" id="userId" path="userId"></form:input>
-<form:input type ="text" id="password" path="userId"></form:input>
-<input type ="button" value="Submit" ></input>
-</form:form>
+	<form:form action="/register.htm" commandName="User">
+		<form:input type="text" id="userId" path="userId"></form:input>
+		<form:input type="text" id="password" path="userId"></form:input>
+		<input type="button" value="Submit"></input>
+	</form:form>
 
 </body>
 </html>
